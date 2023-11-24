@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Library Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <style>
+        @media (max-width: 768px) {
+            .navbar {
+                justify-content: flex-end;
+            }
+        }
+    </style>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark p-3 bg-danger" id="headerNav">
+        <div class="container-fluid">
+          <a class="navbar-brand d-block d-lg-none" href="#">
+            <img src="/static_files/images/logos/logo_2_white.png" height="80" />
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+              <li class="nav-item">
+                <a class="nav-link mx-2 active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-2" href="cart.html">Cart</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-2" href="categories.html">Categories</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-2" href="payment.html">payment</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-2" href="contact.html">Contact</a>
+              </li>
+          
+            </ul>
+          </div>
+        </div>
+      </nav>
+<header>
+    <h2 style="background-color: darkblue; color: white; text-align: center; padding: 20px">Online Library</h2>
+</header>
+    <!-- Image Slideshow -->
+   <img src="download (8).jpg" alt="" width="100%">
+    <br>
+   
+    <br>
+    <div id="book-container" class="row"></div>
+
+    <script>
+        // Function to fetch and display books
+        async function displayBooks() {
+            try {
+                const response = await fetch('book.json'); // Assuming 'books.json' is in the same directory
+                const data = await response.json();
+
+                const bookContainer = document.getElementById('book-container');
+
+                // Iterate through the book data
+                data.forEach((book) => {
+                    const bookCard = document.createElement('div');
+                    bookCard.classList.add('col-md-3', 'mb-2');
+                    bookCard.innerHTML = `
+          <div class="card">
+            <img src="${book.cover_image}" class="card-img-top" alt="${book.title}" style="max-height: 500px; object-fit: cover;">  
+            <div class="card-body">
+              <h5 class="card-title">${book.title}</h5>
+              <p class="card-text">Author: ${book.author}</p>
+              <p class="card-text">Price: $${book.price.toFixed(2)}</p>
+              <button class="btn btn-primary">Add to Cart</button>
+            </div>
+          </div>
+        `;
+
+                    // Append the book card to the container
+                    bookContainer.appendChild(bookCard);
+                });
+            } catch (error) {
+                console.error('Error loading books:', error);
+            }
+        }
+
+
+
+        // Call the function to display books
+        displayBooks();
+    </script>
+
+    <!-- Book Display Section -->
+    <div class="container">
